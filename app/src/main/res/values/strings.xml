@@ -4,7 +4,7 @@
     <string name="action_settings">Opciones</string>
 
     <string name="home_item">Home</string>
-    <string name="productos_item">Productos</string>
+    <string name="bluetooth_item">Arduino</string>
     <string name="compras_item">Carrito</string>
     <string name="ordenes_item">Ordenes</string>
     <string name="facturas_item">Facturas</string>

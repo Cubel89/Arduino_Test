@@ -1,6 +1,7 @@
 package es.ateneasystems.arduinotest;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -10,11 +11,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Switch;
+
+import es.ateneasystems.arduinotest.fragments.Home;
 
 public class MainActivity extends AppCompatActivity {
+    /**
+     * Log
+     */
+    private String logname = "MainActivity";
+
     /**
      * Instancia del drawer
      */
@@ -99,31 +109,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void selectItem(String title) {
-        // Enviar título como arguemento del fragmento
-        /*Bundle args = new Bundle();
-        args.putString(PlaceholderFragment.ARG_SECTION_TITLE, title);
-        */
-
-       /* Fragment fragment = PlaceholderFragment.newInstance(title);
-        fragment.setArguments(args);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.main_content, fragment)
-                .commit();
+        Log.d(logname,title);
+        //Cargamos el fragment
+        cargar_fragment(title);
 
         drawerLayout.closeDrawers(); // Cerrar drawer
         setTitle(title); // Setear título actual*/
 
-       /* Fragment fragment = null;
-        fragment = new PruebasConexion();
+    }
+
+    public void cargar_fragment(String title){
+        //Creamos la variable fragment
+        Fragment fragment = null;
+
+
+        //Comprobamos el fragment
+        switch (title){
+
+            case "Home":
+                fragment = new Home();
+                break;
+
+            default:
+                fragment = new Home();
+                        Snackbar.make(findViewById(android.R.id.content), "Activity no existente", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    break;
+
+        }
+
+        //Cargamos el fragment
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_content, fragment)
                 .commit();
-*/
-        drawerLayout.closeDrawers(); // Cerrar drawer
-        setTitle(title); // Setear título actual*/
-
     }
 
 

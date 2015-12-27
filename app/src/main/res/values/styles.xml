@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="Theme.JanusShop" parent="Base.AppTheme"/>
+    <style name="Theme.ArduinoCubel" parent="Base.AppTheme"/>
 
     <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
