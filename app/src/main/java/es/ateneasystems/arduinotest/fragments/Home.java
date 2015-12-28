@@ -1,21 +1,18 @@
 package es.ateneasystems.arduinotest.fragments;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
+
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import es.ateneasystems.arduinotest.R;
+import es.ateneasystems.arduinotest.dialog.DialogoAceptarCancelar;
 
 
 public class Home extends Fragment {
@@ -49,7 +46,8 @@ public class Home extends Fragment {
             @Override
             public void onClick(View view) {
                 mostrar_cartel("Botón no funcional");
-                createSimpleDialog("Permisos Bluetooth","Es necesario activar el bluetooth para poder buscar otros dispositovos");
+                //createSimpleDialog("Permisos Bluetooth","Es necesario activar el bluetooth para poder buscar otros dispositovos");
+                showDialog();
             }
         });
 
@@ -62,29 +60,21 @@ public class Home extends Fragment {
                 .setAction("Action", null).show();
     }
 
-    public AlertDialog createSimpleDialog(String titulo, String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    public void showDialog() {
+        Log.d(logname, "Dialog");
+        DialogoAceptarCancelar dialogo = new DialogoAceptarCancelar();
+        dialogo.setTitulo("Titulo Dialogo");
+        dialogo.setMensaje("Mensaje escrito");
+        dialogo.getShowsDialog();
+    }
 
-        builder.setTitle(titulo)
-                .setMessage(mensaje)
-                .setPositiveButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //listener.onPossitiveButtonClick();
-                                Log.d(logname,"OK");
-                            }
-                        })
-                .setNegativeButton("CANCELAR",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //listener.onNegativeButtonClick();
-                                Log.d(logname,"KO");
-                            }
-                        });
+    public void doPositiveClick() {
+        // Do stuff here.
+        Log.i("FragmentAlertDialog", "Positive click!");
+    }
 
-        return builder.create();
+    public void doNegativeClick() {
+        // Do stuff here.
     }
 
 };
