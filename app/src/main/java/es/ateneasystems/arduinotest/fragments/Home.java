@@ -1,11 +1,17 @@
 package es.ateneasystems.arduinotest.fragments;
 
 
+import android.bluetooth.BluetoothAdapter;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +27,12 @@ public class Home extends Fragment {
      */
     private String logname = "Home (Fragment)";
 
+    //Variables estaticas
+    public static int REQUEST_BLUETOOTH = 1;
 
     //Variables
     private View view;
+    BluetoothAdapter bluetoothDispostivo;
 
     public Home() {
         // Required empty public constructor
@@ -38,6 +47,7 @@ public class Home extends Fragment {
 
         //Declaracion de componentes
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        bluetoothDispostivo = BluetoothAdapter.getDefaultAdapter();
 
 
 
@@ -46,8 +56,9 @@ public class Home extends Fragment {
             @Override
             public void onClick(View view) {
                 mostrar_cartel("Botón no funcional");
-                //createSimpleDialog("Permisos Bluetooth","Es necesario activar el bluetooth para poder buscar otros dispositovos");
-                //showDialog();
+                //comprobar_bluetooth();
+                //habilitar_bluetooth();
+
             }
         });
 
@@ -60,21 +71,81 @@ public class Home extends Fragment {
                 .setAction("Action", null).show();
     }
 
-    public void showDialog() {
-        Log.d(logname, "Dialog");
-        DialogoAceptarCancelar dialogo = new DialogoAceptarCancelar();
-        dialogo.setTitulo("Titulo Dialogo");
-        dialogo.setMensaje("Mensaje escrito");
-        dialogo.getShowsDialog();
+    //Comprobar si el dispositivo tiene bluetooth
+    public void comprobar_bluetooth() {
+
+        // Phone does not support Bluetooth so let the user know and exit.
+        if (bluetoothDispostivo == null) {
+            /*new AlertDialog.Builder(getActivity())
+                    .setTitle("Not compatible")
+                    .setMessage("Your phone does not support Bluetooth")
+                    .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //System.exit(0);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();*/
+
+
+            /*new AlertDialog.Builder(getActivity())
+                    // Set Dialog Icon
+                    .setIcon(R.mipmap.ic_launcher)
+                    // Set Dialog Title
+                    .setTitle("Titulo hola")
+                    // Set Dialog Message
+                    .setMessage("mensaje hola")
+
+                    // Positive button
+                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do something else
+                            Log.d("Dialogo", "Aceptar");
+                        }
+                    })
+
+                    // Negative Button
+                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do something else
+                            Log.d("Dialogo", "Cancelar");
+                        }
+                    }).show();*/
+           /* DialogoAceptarCancelar dialogo = new DialogoAceptarCancelar();
+            dialogo.setTitulo("Titulo Dialogo");
+            dialogo.setMensaje("Mensaje escrito");
+            dialogo.getShowsDialog();*/
+            new AlertDialog.Builder(getActivity())
+                    // Set Dialog Icon
+                    .setIcon(R.mipmap.ic_bluetooth_grey600_48dp)
+                    // Set Dialog Title
+                    .setTitle("Titulo")
+                    // Set Dialog Message
+                    .setMessage("Mensaje")
+
+                    // Positive button
+                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do something else
+                            Log.d("Dialogo", "Aceptar");
+                        }
+                    })
+
+                    // Negative Button
+                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do something else
+                            Log.d("Dialogo", "Cancelar");
+                        }
+                    }).show();
+        }
     }
 
-    public void doPositiveClick() {
-        // Do stuff here.
-        Log.i("FragmentAlertDialog", "Positive click!");
-    }
-
-    public void doNegativeClick() {
-        // Do stuff here.
+    public void habilitar_bluetooth() {
+        if (!bluetoothDispostivo.isEnabled()) {
+            Intent enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBT, REQUEST_BLUETOOTH);
+        }
     }
 
 };
