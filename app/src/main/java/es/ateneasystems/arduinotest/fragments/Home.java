@@ -47,7 +47,7 @@ public class Home extends Fragment {
             public void onClick(View view) {
                 mostrar_cartel("Botón no funcional");
                 //createSimpleDialog("Permisos Bluetooth","Es necesario activar el bluetooth para poder buscar otros dispositovos");
-                showDialog();
+                //showDialog();
             }
         });
 
