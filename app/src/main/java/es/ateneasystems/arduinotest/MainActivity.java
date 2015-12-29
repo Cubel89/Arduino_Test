@@ -19,6 +19,7 @@ import android.widget.Switch;
 
 import es.ateneasystems.arduinotest.fragments.Arduino;
 import es.ateneasystems.arduinotest.fragments.Home;
+import es.ateneasystems.arduinotest.fragments.Terminal;
 
 public class MainActivity extends AppCompatActivity {
     /**
@@ -146,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
         if (title == getApplication().getString(R.string.home_item)) fragment = new Home();
         else if (title == getApplication().getString(R.string.arduino_item))
             fragment = new Arduino();
+        else if (title == getApplication().getString(R.string.terminal_item))
+            fragment = new Terminal();
         else {
             fragment = new Home();
             Snackbar.make(findViewById(android.R.id.content), "Activity no existente", Snackbar.LENGTH_LONG)

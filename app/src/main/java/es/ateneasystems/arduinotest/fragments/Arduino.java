@@ -56,7 +56,7 @@ public class Arduino extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mostrar_cartel("Botón no funcional");
+                //mostrar_cartel("Botón no funcional");
                 comprobar_bluetooth();
 
 
@@ -87,13 +87,19 @@ public class Arduino extends Fragment {
         }
     }
 
-    public void habilitar_bluetooth() {
+    public void solicitar_permisos(){
         if (!bluetoothDispostivo.isEnabled()) {
-            //Mostramos informacion sobre lo que vamos a pedir ahora
-            mostrar_cartel(getActivity().getString(R.string.permisos_bluetooth), getActivity().getString(R.string.info_activar_bluetooth), R.mipmap.ic_bluetooth_grey600_48dp, false);
             //Mandamos la orden para activar el bluetooth, esto ya muestra el cartel de permisos para activar
             Intent enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBT, REQUEST_BLUETOOTH);
+        }
+    }
+
+    public void habilitar_bluetooth() {
+        if (!bluetoothDispostivo.isEnabled()) {
+            //Mostramos informacion sobre lo que vamos a pedir ahora
+            mostrar_cartel_activar_bluetooth(getActivity().getString(R.string.permisos_bluetooth), getActivity().getString(R.string.info_activar_bluetooth), R.mipmap.ic_bluetooth_grey600_48dp, false);
+
         }
     }
 
@@ -134,6 +140,51 @@ public class Arduino extends Fragment {
                 public void onClick(DialogInterface dialog, int which) {
                     // Do something else
                     Log.d("Dialogo", getActivity().getString(R.string.boton_leido));
+                    //return true;
+                }
+            });
+        }
+
+        //Mostramos el cartel
+        cartel_mostrar.show();
+    }
+    public void mostrar_cartel_activar_bluetooth(String titulo, String mensaje, int identificador_imagen, boolean pregunta) {
+        //boolean respuesta = false;
+
+        //Creamos el cartel
+        AlertDialog.Builder cartel_mostrar = new AlertDialog.Builder(getActivity());
+
+        //Añadimos su icono
+        cartel_mostrar.setIcon(identificador_imagen);
+
+        //Añadimos titulo
+        cartel_mostrar.setTitle(titulo);
+
+        //Añadimos mensaje
+        cartel_mostrar.setMessage(mensaje);
+
+        //Comprobamos si es informacion o pregunta
+        if (pregunta) { //Si es verdadero añadiremos los dos botones
+            cartel_mostrar.setPositiveButton(getActivity().getString(R.string.boton_aceptar), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do something else
+                    Log.d("Dialogo", getActivity().getString(R.string.boton_aceptar));
+                    //return true;
+                }
+            });
+            cartel_mostrar.setNegativeButton(getActivity().getString(R.string.boton_cancelar), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do something else
+                    Log.d("Dialogo", getActivity().getString(R.string.boton_cancelar));
+                    //return false;
+                }
+            });
+        } else { //Si es falso, solo uno
+            cartel_mostrar.setPositiveButton(getActivity().getString(R.string.boton_leido), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do something else
+                    Log.d("Dialogo", getActivity().getString(R.string.boton_leido));
+                    solicitar_permisos();
                     //return true;
                 }
             });
