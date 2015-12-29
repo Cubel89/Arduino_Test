@@ -46,8 +46,14 @@ public class Home extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         //Declaracion de componentes
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab2);
         bluetoothDispostivo = BluetoothAdapter.getDefaultAdapter();
+
+
+        //Si el dispositivo no tiene bluetooth mostramos un mensaje
+        if (bluetoothDispostivo == null) {
+            mostrar_cartel(getActivity().getString(R.string.bluetooth), getActivity().getString(R.string.alerta_no_bluetooth), R.mipmap.ic_alert_grey600_48dp, false);
+        }
 
 
 
@@ -56,8 +62,7 @@ public class Home extends Fragment {
             @Override
             public void onClick(View view) {
                 mostrar_cartel("Botón no funcional");
-                //comprobar_bluetooth();
-                //habilitar_bluetooth();
+
 
             }
         });
@@ -71,81 +76,50 @@ public class Home extends Fragment {
                 .setAction("Action", null).show();
     }
 
-    //Comprobar si el dispositivo tiene bluetooth
-    public void comprobar_bluetooth() {
+    //Dialogos
+    public void mostrar_cartel(String titulo, String mensaje, int identificador_imagen, boolean pregunta) {
+        //boolean respuesta = false;
 
-        // Phone does not support Bluetooth so let the user know and exit.
-        if (bluetoothDispostivo == null) {
-            /*new AlertDialog.Builder(getActivity())
-                    .setTitle("Not compatible")
-                    .setMessage("Your phone does not support Bluetooth")
-                    .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            //System.exit(0);
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();*/
+        //Creamos el cartel
+        AlertDialog.Builder cartel_mostrar = new AlertDialog.Builder(getActivity());
 
+        //Añadimos su icono
+        cartel_mostrar.setIcon(identificador_imagen);
 
-            /*new AlertDialog.Builder(getActivity())
-                    // Set Dialog Icon
-                    .setIcon(R.mipmap.ic_launcher)
-                    // Set Dialog Title
-                    .setTitle("Titulo hola")
-                    // Set Dialog Message
-                    .setMessage("mensaje hola")
+        //Añadimos titulo
+        cartel_mostrar.setTitle(titulo);
 
-                    // Positive button
-                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Do something else
-                            Log.d("Dialogo", "Aceptar");
-                        }
-                    })
+        //Añadimos mensaje
+        cartel_mostrar.setMessage(mensaje);
 
-                    // Negative Button
-                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Do something else
-                            Log.d("Dialogo", "Cancelar");
-                        }
-                    }).show();*/
-           /* DialogoAceptarCancelar dialogo = new DialogoAceptarCancelar();
-            dialogo.setTitulo("Titulo Dialogo");
-            dialogo.setMensaje("Mensaje escrito");
-            dialogo.getShowsDialog();*/
-            new AlertDialog.Builder(getActivity())
-                    // Set Dialog Icon
-                    .setIcon(R.mipmap.ic_bluetooth_grey600_48dp)
-                    // Set Dialog Title
-                    .setTitle("Titulo")
-                    // Set Dialog Message
-                    .setMessage("Mensaje")
-
-                    // Positive button
-                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Do something else
-                            Log.d("Dialogo", "Aceptar");
-                        }
-                    })
-
-                    // Negative Button
-                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Do something else
-                            Log.d("Dialogo", "Cancelar");
-                        }
-                    }).show();
+        //Comprobamos si es informacion o pregunta
+        if (pregunta) { //Si es verdadero añadiremos los dos botones
+            cartel_mostrar.setPositiveButton(getActivity().getString(R.string.boton_aceptar), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do something else
+                    Log.d("Dialogo", getActivity().getString(R.string.boton_aceptar));
+                    //return true;
+                }
+            });
+            cartel_mostrar.setNegativeButton(getActivity().getString(R.string.boton_cancelar), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do something else
+                    Log.d("Dialogo", getActivity().getString(R.string.boton_cancelar));
+                    //return false;
+                }
+            });
+        } else { //Si es falso, solo uno
+            cartel_mostrar.setPositiveButton(getActivity().getString(R.string.boton_leido), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do something else
+                    Log.d("Dialogo", getActivity().getString(R.string.boton_leido));
+                    //return true;
+                }
+            });
         }
-    }
 
-    public void habilitar_bluetooth() {
-        if (!bluetoothDispostivo.isEnabled()) {
-            Intent enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBT, REQUEST_BLUETOOTH);
-        }
+        //Mostramos el cartel
+        cartel_mostrar.show();
     }
 
 };

@@ -10,7 +10,7 @@
         <item
             android:id="@+id/nav_productos"
             android:icon="@mipmap/ic_bluetooth_grey600_48dp"
-            android:title="@string/bluetooth_item" />
+            android:title="@string/arduino_item" />
         <item
             android:id="@+id/nav_carrito"
             android:icon="@mipmap/ic_shopping_cart"

@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Switch;
 
+import es.ateneasystems.arduinotest.fragments.Arduino;
 import es.ateneasystems.arduinotest.fragments.Home;
 
 public class MainActivity extends AppCompatActivity {
@@ -124,10 +125,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Comprobamos el fragment
-        switch (title){
+        /*switch (title){
 
-            case "Home":
+            case home:
                 fragment = new Home();
+                break;
+            case arduino:
+                fragment = new Arduino();
                 break;
 
             default:
@@ -136,6 +140,16 @@ public class MainActivity extends AppCompatActivity {
                                 .setAction("Action", null).show();
                     break;
 
+        }*/
+
+        //Comprobamos el fragment
+        if (title == getApplication().getString(R.string.home_item)) fragment = new Home();
+        else if (title == getApplication().getString(R.string.arduino_item))
+            fragment = new Arduino();
+        else {
+            fragment = new Home();
+            Snackbar.make(findViewById(android.R.id.content), "Activity no existente", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         }
 
         //Cargamos el fragment
