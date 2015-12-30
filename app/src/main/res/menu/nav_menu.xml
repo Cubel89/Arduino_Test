@@ -15,6 +15,7 @@
             android:id="@+id/nav_carrito"
             android:icon="@mipmap/ic_console_grey600_48dp"
             android:title="@string/terminal_item" />
+        <!--
         <item
             android:id="@+id/nav_ordenes"
             android:icon="@mipmap/ic_truck"
@@ -23,7 +24,7 @@
             android:id="@+id/nav_facturas"
             android:icon="@mipmap/ic_file_document"
             android:title="@string/facturas_item" />
-
+        -->
         <!-- Sección de configuración -->
         <item
             android:id="@+id/configuration_section"

@@ -13,6 +13,7 @@ public class Globales extends Application {
 
     private String arduino_conectado;
     private String arduino_conectado_mac;
+    private String arduino_a_conectar;
 
     //Preferencias
     SharedPreferences prefs;
@@ -46,6 +47,10 @@ public class Globales extends Application {
         return this.aviso_cookies;
     }
 
+    public String getArduino_a_conectar() {
+        return this.arduino_a_conectar;
+    }
+
     //Setters
     public void setArduino_conectado(String arduino_conectado) {
         this.arduino_conectado = arduino_conectado;
@@ -61,5 +66,9 @@ public class Globales extends Application {
         editor.commit();
 
         this.aviso_cookies = aviso_cookies;
+    }
+
+    public void setArduino_a_conectar(String arduino_a_conectar) {
+        this.arduino_a_conectar = arduino_a_conectar;
     }
 }
