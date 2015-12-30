@@ -14,6 +14,10 @@
 
     <string name="dispositivo_no_bluetooth">Este dispositivo no dispone de bluetooth</string>
     <string name="info_activar_bluetooth">Para poder buscar un dispostivo Arduino se necesitará activar el bluetooth</string>
+
+    <string name="titulo_politica_cookies">Política de Cookies</string>
+    <string name="texto_politica_cookies">Esta aplicación emplea cookies de Google para prestar sus servicios, personalizar anuncios y analizar el tráfico anónimamente.\nSi usas esta aplicación se sobreentiende que aceptas el uso de cookies.</string>
+
     <!-- FIN Alertas -->
 
     <!-- Menu -->
