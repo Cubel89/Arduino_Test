@@ -1,7 +1,9 @@
 package es.ateneasystems.arduinotest;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -16,6 +18,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Switch;
+import android.widget.Toast;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import es.ateneasystems.arduinotest.fragments.Arduino;
 import es.ateneasystems.arduinotest.fragments.Home;
@@ -26,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
      * Log
      */
     private String logname = "MainActivity";
+
+    //Variables
+    private InterstitialAd mInterstitialAd;
+    private long startTime = 0L; //Donde se guardara la informacion de cuando inicio la app
+    private Handler customHandler = new Handler();
+
 
     /**
      * Instancia del drawer
@@ -55,8 +68,28 @@ public class MainActivity extends AppCompatActivity {
             selectItem(drawerTitle);
         }
 
-        //FragmentManager fragmentManager = getFragmentManager();
-        //FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        //Inicio TODO Esto aun no funciona
+        startTime = SystemClock.uptimeMillis();
+        customHandler.postDelayed(contador_tiempo, 0);
+
+
+        //Publicidad
+        // Create the InterstitialAd and set the adUnitId.
+        mInterstitialAd = new InterstitialAd(this);
+        // Defined in res/values/strings.xml
+        mInterstitialAd.setAdUnitId(getString(R.string.publicidad_Intersticial_id));
+
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                Log.d(logname, "Cerrada publicidad");
+            }
+        });
+
+
+
 
 
     }
@@ -161,5 +194,28 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    private void showInterstitial() {
+        //Cargamos la publicidad
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mInterstitialAd.loadAd(adRequest);
+        // Show the ad if it's ready. Otherwise toast and restart the game.
+        if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+    }
 
+    private Runnable contador_tiempo = new Runnable() {
+        public void run() {
+            long timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+            int secs = (int) (timeInMilliseconds / 1000);
+            int mins = secs / 60;
+            if (mins > 5) {
+                Log.d(logname, String.valueOf(mins));
+                showInterstitial();
+                // mostrar publicidad y poner el sistema a 0
+                startTime = SystemClock.uptimeMillis();
+            }
+            Log.d(logname, String.valueOf(mins));
+        }
+    };
 }

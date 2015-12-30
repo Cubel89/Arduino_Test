@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import es.ateneasystems.arduinotest.MainActivity;
 import es.ateneasystems.arduinotest.R;
 import es.ateneasystems.arduinotest.dialog.DialogoAceptarCancelar;
 
@@ -33,6 +35,7 @@ public class Home extends Fragment {
     //Variables
     private View view;
     BluetoothAdapter bluetoothDispostivo;
+
 
     public Home() {
         // Required empty public constructor
