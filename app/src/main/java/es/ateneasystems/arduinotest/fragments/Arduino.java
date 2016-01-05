@@ -317,6 +317,9 @@ public class Arduino extends Fragment {
             //Guardamos la mac del dispositvo
             globales.setArduino_a_conectar(address);
 
+            //Cargamos el fragment
+            dispostivo_conectado();
+
 
             // Create the result Intent and include the MAC address
            /* Intent intent = new Intent();
@@ -358,5 +361,18 @@ public class Arduino extends Fragment {
             }
         }
     };
+
+    private void dispostivo_conectado() {
+        //Creamos la variable fragment
+        Fragment fragment = null;
+
+        fragment = new Terminal();
+        //Cargamos el fragment
+        getFragmentManager().beginTransaction()
+                .replace(R.id.main_content, fragment)
+                .commit();
+
+        //TODO: falta cambiar el titulo i el boton del menu seleccionado
+    }
 
 };
