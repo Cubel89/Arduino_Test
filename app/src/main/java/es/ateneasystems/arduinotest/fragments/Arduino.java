@@ -52,6 +52,7 @@ public class Arduino extends Fragment {
     //Variables
     private View view;
     BluetoothAdapter bluetoothDispostivo;
+    Globales globales;
 
     public Arduino() {
         // Required empty public constructor
@@ -69,6 +70,8 @@ public class Arduino extends Fragment {
         bluetoothDispostivo = BluetoothAdapter.getDefaultAdapter();
         final TextView txt_emparejados = (TextView) view.findViewById(R.id.txt_emparejados);
         final TextView txt_nuevos = (TextView) view.findViewById(R.id.txt_nuevos);
+        globales = (Globales) getActivity().getApplicationContext();
+        ;
 
 
         //Si el dispositivo no tiene bluetooth mostramos un mensaje
@@ -310,9 +313,8 @@ public class Arduino extends Fragment {
             String info = ((TextView) v).getText().toString();
             String address = info.substring(info.length() - 17);
 
-            //Log.d(logname,address);
+            Log.d(logname, address);
             //Guardamos la mac del dispositvo
-            Globales globales = (Globales) getContext();
             globales.setArduino_a_conectar(address);
 
 
