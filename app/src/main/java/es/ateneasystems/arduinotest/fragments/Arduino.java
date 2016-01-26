@@ -71,7 +71,6 @@ public class Arduino extends Fragment {
         final TextView txt_emparejados = (TextView) view.findViewById(R.id.txt_emparejados);
         final TextView txt_nuevos = (TextView) view.findViewById(R.id.txt_nuevos);
         globales = (Globales) getActivity().getApplicationContext();
-        ;
 
 
         //Si el dispositivo no tiene bluetooth mostramos un mensaje
