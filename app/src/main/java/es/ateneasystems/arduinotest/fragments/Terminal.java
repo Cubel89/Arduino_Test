@@ -94,8 +94,8 @@ public class Terminal extends Fragment {
         //Log.d(logname,txt_terminal.getWidth()+" - "+btn_enviar.getWidth()+" = "+(txt_terminal.getWidth()-btn_enviar.getWidth()));
         //txt_terminal.setWidth(txt_terminal.getWidth()-btn_enviar.getWidth());
         //TODO: Meter la mac en la bariable de arriba
-        Log.e(logname, globales.getArduino_a_conectar());
-        address = globales.getArduino_a_conectar();
+        Log.e(logname, globales.getArduino_conectado_mac());
+        address = globales.getArduino_conectado_mac();
 
 
         //BLUETOOTH
@@ -253,7 +253,7 @@ public class Terminal extends Fragment {
         super.onResume();
         Log.d(logname, "...onResume - try connect...");
         //Log.d(logname,globales.getArduino_a_conectar());
-        address = globales.getArduino_a_conectar();
+        address = globales.getArduino_conectado_mac();
         // Set up a pointer to the remote node using it's address.
         BluetoothDevice device = btAdapter.getRemoteDevice(address);
 
@@ -284,7 +284,7 @@ public class Terminal extends Fragment {
         try {
             btSocket.connect();
             Log.d(logname, "....Connection ok...");
-            automaticos("Conectado con " + address);
+            automaticos("Conectado con "+globales.getArduino_conectado()+" [" + address+"]");
         } catch (IOException e) {
             try {
                 btSocket.close();

@@ -311,10 +311,14 @@ public class Arduino extends Fragment {
             // Get the device MAC address, which is the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
             String address = info.substring(info.length() - 17);
+            String nombre_dispostivo = info.substring(0,info.length() - 17);
 
             Log.d(logname, address);
-            //Guardamos la mac del dispositvo
-            globales.setArduino_a_conectar(address);
+            //Guardamos la mac del dispositivo
+            globales.setArduino_conectado_mac(address);
+
+            //Guardamos el nombre del dispositivo
+            globales.setArduino_conectado(nombre_dispostivo);
 
             //Cargamos el fragment
             dispostivo_conectado();
