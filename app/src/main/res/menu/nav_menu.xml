@@ -15,6 +15,14 @@
             android:id="@+id/nav_carrito"
             android:icon="@mipmap/ic_console_grey600_48dp"
             android:title="@string/terminal_item" />
+        <item
+            android:id="@+id/nav_digitales"
+            android:icon="@mipmap/ic_label_outline_grey600_48dp"
+            android:title="@string/digital_item" />
+        <item
+            android:id="@+id/nav_analogicas"
+            android:icon="@mipmap/ic_label_grey600_48dp"
+            android:title="@string/analogico_item" />
         <!--
         <item
             android:id="@+id/nav_ordenes"

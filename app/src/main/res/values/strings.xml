@@ -24,6 +24,8 @@
     <string name="home_item">Home</string>
     <string name="arduino_item">Arduino</string>
     <string name="terminal_item">Terminal</string>
+    <string name="digital_item">Digital</string>
+    <string name="analogico_item">Analógico</string>
     <string name="ordenes_item">Ordenes</string>
     <string name="facturas_item">Facturas</string>
     <string name="log_out_item">Cerrar Aplicación</string>

@@ -94,9 +94,14 @@ public class Terminal extends Fragment {
         //Log.d(logname,txt_terminal.getWidth()+" - "+btn_enviar.getWidth()+" = "+(txt_terminal.getWidth()-btn_enviar.getWidth()));
         //txt_terminal.setWidth(txt_terminal.getWidth()-btn_enviar.getWidth());
         //TODO: Meter la mac en la bariable de arriba
-        Log.e(logname, globales.getArduino_conectado_mac());
-        address = globales.getArduino_conectado_mac();
-
+        //TODO: Cuando no hay mac FC. Con esto se evita el error pero continua con el onResume
+        try {
+            Log.e(logname, globales.getArduino_conectado_mac());
+            address = globales.getArduino_conectado_mac();
+        } catch (Throwable e) {
+            //e.printStackTrace();
+            dispostivo_no_conectado();
+        }
 
         //BLUETOOTH
         h = new Handler() {
@@ -255,6 +260,7 @@ public class Terminal extends Fragment {
         //Log.d(logname,globales.getArduino_a_conectar());
         address = globales.getArduino_conectado_mac();
         // Set up a pointer to the remote node using it's address.
+        //TODO: Cuando no hay dispositivo bluetooth conectado FC
         BluetoothDevice device = btAdapter.getRemoteDevice(address);
 
         // Two things are needed to make a connection:
@@ -371,6 +377,19 @@ public class Terminal extends Fragment {
 
         tv_terminal.append("\n");
 
+    }
+
+    private void dispostivo_no_conectado() {
+        //Creamos la variable fragment
+        Fragment fragment = null;
+
+        fragment = new Arduino();
+        //Cargamos el fragment
+        getFragmentManager().beginTransaction()
+                .replace(R.id.main_content, fragment)
+                .commit();
+
+        //TODO: falta cambiar el titulo i el boton del menu seleccionado
     }
 
 
