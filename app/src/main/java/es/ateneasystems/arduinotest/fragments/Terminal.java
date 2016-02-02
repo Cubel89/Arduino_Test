@@ -62,6 +62,7 @@ public class Terminal extends Fragment {
     private ConnectedThread mConnectedThread;
 
     // SPP UUID service
+    //private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     // MAC-address of Bluetooth module (you must edit this line)
@@ -106,18 +107,21 @@ public class Terminal extends Fragment {
         //BLUETOOTH
         h = new Handler() {
             public void handleMessage(android.os.Message msg) {
+                Log.d(logname, "Entra en handler");
                 switch (msg.what) {
                     case RECIEVE_MESSAGE:                                                    // if receive massage
+                        Log.d(logname, "Entra en Receive");
                         byte[] readBuf = (byte[]) msg.obj;
                         String strIncom = new String(readBuf, 0, msg.arg1);                    // create string from bytes array
                         sb.append(strIncom);                                                // append string
                         int endOfLineIndex = sb.indexOf("\r\n");                            // determine the end-of-line
                         if (endOfLineIndex > 0) {                                            // if end-of-line,
-                            String sbprint = sb.substring(0, endOfLineIndex);                // extract string
+                            String message = sb.substring(0, endOfLineIndex);                // extract string
                             sb.delete(0, sb.length());                                        // and clear
-                            tv_terminal.setText("Data from Arduino: " + sbprint);            // update TextView
+                            //tv_terminal.setText("Data from Arduino: " + sbprint);            // update TextView
+                            automaticos("Recibido desde Arduino: " + message);
                         }
-                        //Log.d(TAG, "...String:"+ sb.toString() +  "Byte:" + msg.arg1 + "...");
+                        Log.d(logname, "...String:" + sb.toString() + "Byte:" + msg.arg1 + "...");
                         break;
                 }
             }
