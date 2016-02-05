@@ -1,8 +1,14 @@
 package es.ateneasystems.arduinotest.global;
 
 import android.app.Application;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.ArrayAdapter;
+
+import java.text.SimpleDateFormat;
+import java.util.UUID;
 
 /**
  * Created by cubel on 27/12/15.
@@ -13,6 +19,59 @@ public class Globales extends Application {
 
     private String arduino_conectado;
     private String arduino_conectado_mac;
+
+
+    //################ Bluetooth ################//
+    private BluetoothAdapter mBtAdapter;
+    private ArrayAdapter<String> mNewDevicesArrayAdapter;
+    BluetoothAdapter bluetoothDispostivo; //TODO: Creo que esto sobra
+    //Variables estaticas
+    public static int REQUEST_BLUETOOTH = 1;
+
+
+
+    public void setmBtAdapter(BluetoothAdapter mBtAdapter){
+
+        this.mBtAdapter = mBtAdapter;
+
+    }
+
+    public BluetoothAdapter getmBtAdapter (){
+
+        return this.mBtAdapter;
+    }
+
+    public void setmNewDevicesArrayAdapter (ArrayAdapter mNewDevicesArrayAdapter){
+
+        this.mNewDevicesArrayAdapter = mNewDevicesArrayAdapter;
+
+    }
+
+    public ArrayAdapter getmNewDevicesArrayAdapter (){
+
+        return this.mNewDevicesArrayAdapter;
+
+    }
+
+    public int getRequestBluetooth(){
+
+        return  this.REQUEST_BLUETOOTH;
+
+    }
+
+    //################ Bluetooth ################//
+    //################ Bluetooth 2 ################//
+    private static final SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm:ss.SSS");
+    final int RECIEVE_MESSAGE = 1;        // Status  for Handler
+    private BluetoothAdapter btAdapter = null;
+    private BluetoothSocket btSocket = null;
+    private StringBuilder sb = new StringBuilder();
+
+    //private ConnectedThread mConnectedThread;
+
+    // SPP UUID service
+    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    //################ Bluetooth 2 ################//
 
     //Preferencias
     SharedPreferences prefs;
@@ -65,4 +124,8 @@ public class Globales extends Application {
         this.arduino_conectado_mac = arduino_conectado_mac;
     }
 
+
+
+
 }
+

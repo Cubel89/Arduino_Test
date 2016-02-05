@@ -51,7 +51,7 @@ public class Arduino extends Fragment {
 
     //Variables
     private View view;
-    BluetoothAdapter bluetoothDispostivo;
+    BluetoothAdapter bluetoothDispostivo; //TODO: Creo que esto sobra
     Globales globales;
 
     public Arduino() {
