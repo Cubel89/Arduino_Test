@@ -48,27 +48,15 @@ public class Terminal extends Fragment {
 
     //Variables
     Globales globales;
-    private static final SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm:ss.SSS");
     private View view;
     TextView tv_terminal;
     EditText txt_terminal;
     Handler h;
 
     final int RECIEVE_MESSAGE = 1;        // Status  for Handler
-    private BluetoothAdapter btAdapter = null;
-    private BluetoothSocket btSocket = null;
     private StringBuilder sb = new StringBuilder();
 
     private ConnectedThread mConnectedThread;
-
-    // SPP UUID service
-    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
-    // MAC-address of Bluetooth module (you must edit this line)
-    //private static String address = "00:15:FF:F2:19:5F";
-    //private static String address = "98:D3:31:40:1F:C0";
-
-    private static String address = "";
 
     public Terminal() {
         // Required empty public constructor
@@ -82,11 +70,12 @@ public class Terminal extends Fragment {
         view = inflater.inflate(R.layout.fragment_terminal, container, false);
 
         //Declaracion de componentes
+        globales = (Globales) getActivity().getApplicationContext();
         final FloatingActionButton fab_enviar = (FloatingActionButton) view.findViewById(R.id.fab_enviar);
         final FloatingActionButton fab_escribir = (FloatingActionButton) view.findViewById(R.id.fab_escribir);
         txt_terminal = (EditText) view.findViewById(R.id.txt_terminal);
         tv_terminal = (TextView) view.findViewById(R.id.tv_terminal);
-        globales = (Globales) getActivity().getApplicationContext();
+
 
         //Inicio
         fab_enviar.setVisibility(view.GONE);
@@ -97,7 +86,7 @@ public class Terminal extends Fragment {
         //TODO: Cuando no hay mac FC. Con esto se evita el error pero continua con el onResume
         try {
             Log.e(logname, globales.getArduino_conectado_mac());
-            address = globales.getArduino_conectado_mac();
+            //address = globales.getArduino_conectado_mac();
         } catch (Throwable e) {
             //e.printStackTrace();
             dispostivo_no_conectado();
@@ -128,7 +117,7 @@ public class Terminal extends Fragment {
             ;
         };
 
-        btAdapter = BluetoothAdapter.getDefaultAdapter();        // get Bluetooth adapter
+        globales.setbluetoothDispositivoAdapter(BluetoothAdapter.getDefaultAdapter());        // get Bluetooth adapter
         checkBTState();
 
         //Pulsaciones de botones
@@ -176,22 +165,22 @@ public class Terminal extends Fragment {
         if (Build.VERSION.SDK_INT >= 10) {
             try {
                 final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[]{UUID.class});
-                return (BluetoothSocket) m.invoke(device, MY_UUID);
+                return (BluetoothSocket) m.invoke(device, globales.getMyUuid());
             } catch (Exception e) {
                 Log.e(logname, "Could not create Insecure RFComm Connection", e);
             }
         }
-        return device.createRfcommSocketToServiceRecord(MY_UUID);
+        return device.createRfcommSocketToServiceRecord(globales.getMyUuid());
     }
 
 
     private void checkBTState() {
         // Check for Bluetooth support and then check to make sure it is turned on
         // Emulator doesn't support Bluetooth and will return null
-        if (btAdapter == null) {
+        if (globales.getbluetoothDispositivoAdapter() == null) {
             errorExit("Fatal Error", "Bluetooth not support");
         } else {
-            if (btAdapter.isEnabled()) {
+            if (globales.getbluetoothDispositivoAdapter().isEnabled()) {
                 Log.d(logname, "...Bluetooth ON...");
             } else {
                 //Prompt user to turn on Bluetooth
@@ -261,10 +250,10 @@ public class Terminal extends Fragment {
         super.onResume();
         Log.d(logname, "...onResume - try connect...");
         //Log.d(logname,globales.getArduino_a_conectar());
-        address = globales.getArduino_conectado_mac();
+        //address = globales.getArduino_conectado_mac();
         // Set up a pointer to the remote node using it's address.
         //TODO: Cuando no hay dispositivo bluetooth conectado FC
-        BluetoothDevice device = btAdapter.getRemoteDevice(address);
+        BluetoothDevice device = globales.getbluetoothDispositivoAdapter().getRemoteDevice(globales.getArduino_conectado_mac());
 
         // Two things are needed to make a connection:
         //   A MAC address, which we got above.
@@ -272,31 +261,32 @@ public class Terminal extends Fragment {
         //     UUID for SPP.
 
         try {
-            btSocket = createBluetoothSocket(device);
+            globales.setBtSocket(createBluetoothSocket(device));
         } catch (IOException e) {
             errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
         }
 
         try {
-            btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
+            globales.setBtSocket(device.createRfcommSocketToServiceRecord(globales.getMyUuid()));
         } catch (IOException e) {
             errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
         }
 
         // Discovery is resource intensive.  Make sure it isn't going on
         // when you attempt to connect and pass your message.
-        btAdapter.cancelDiscovery();
+        globales.getbluetoothDispositivoAdapter().cancelDiscovery();
 
         // Establish the connection.  This will block until it connects.
+
         Log.d(logname, "...Connecting...");
         automaticos("Conectando...");
         try {
-            btSocket.connect();
+            globales.getBtSocket().connect();
             Log.d(logname, "....Connection ok...");
-            automaticos("Conectado con "+globales.getArduino_conectado()+" [" + address+"]");
+            automaticos("Conectado con " + globales.getArduino_conectado() + " [" + globales.getArduino_conectado_mac() + "]");
         } catch (IOException e) {
             try {
-                btSocket.close();
+                globales.getBtSocket().close();
             } catch (IOException e2) {
                 errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
                 automaticos("Error al conectar!");
@@ -306,7 +296,7 @@ public class Terminal extends Fragment {
         // Create a data stream so we can talk to server.
         Log.d(logname, "...Create Socket...");
 
-        mConnectedThread = new ConnectedThread(btSocket);
+        mConnectedThread = new ConnectedThread(globales.getBtSocket());
         mConnectedThread.start();
     }
 
@@ -315,10 +305,10 @@ public class Terminal extends Fragment {
         super.onPause();
 
         Log.d(logname, "...In onPause()...");
-        automaticos("Desconectado");
+        //automaticos("Desconectado");
 
         try {
-            btSocket.close();
+            globales.getBtSocket().close();
         } catch (IOException e2) {
             errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
             automaticos("Error al conectar!");
@@ -332,7 +322,7 @@ public class Terminal extends Fragment {
     void appendLog(String message) {
 
         StringBuilder encabezado = new StringBuilder();
-        encabezado.append("[").append(timeformat.format(new Date())).append("]");
+        encabezado.append("[").append(globales.getTimeformat().format(new Date())).append("]");
         SpannableString blackSpannable = new SpannableString(encabezado);
         blackSpannable.setSpan(new ForegroundColorSpan(Color.BLACK), 0, encabezado.length(), 0);
         tv_terminal.append(blackSpannable);
@@ -363,7 +353,7 @@ public class Terminal extends Fragment {
 
 
         StringBuilder automaticos = new StringBuilder();
-        automaticos.append("[").append(timeformat.format(new Date())).append("]");
+        automaticos.append("[").append(globales.getTimeformat().format(new Date())).append("]");
         SpannableString blackSpannable = new SpannableString(automaticos);
         blackSpannable.setSpan(new ForegroundColorSpan(Color.RED), 0, automaticos.length(), 0);
         tv_terminal.append(blackSpannable);

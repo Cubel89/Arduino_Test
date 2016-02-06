@@ -39,19 +39,16 @@ public class Arduino extends Fragment {
     /**
      * Member fields
      */
-    private BluetoothAdapter mBtAdapter;
+    private BluetoothAdapter mBtAdsapter;
 
     /**
      * Newly discovered devices
      */
-    private ArrayAdapter<String> mNewDevicesArrayAdapter;
+    private ArrayAdapter<String> mNewDevicesArrayAdaptser;
 
-    //Variables estaticas
-    public static int REQUEST_BLUETOOTH = 1;
 
     //Variables
     private View view;
-    BluetoothAdapter bluetoothDispostivo; //TODO: Creo que esto sobra
     Globales globales;
 
     public Arduino() {
@@ -66,15 +63,16 @@ public class Arduino extends Fragment {
         view = inflater.inflate(R.layout.fragment_arduino, container, false);
 
         //Declaracion de componentes
+        globales = (Globales) getActivity().getApplicationContext();
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        bluetoothDispostivo = BluetoothAdapter.getDefaultAdapter();
+        globales.setbluetoothDispositivoAdapter(BluetoothAdapter.getDefaultAdapter());
         final TextView txt_emparejados = (TextView) view.findViewById(R.id.txt_emparejados);
         final TextView txt_nuevos = (TextView) view.findViewById(R.id.txt_nuevos);
-        globales = (Globales) getActivity().getApplicationContext();
+
 
 
         //Si el dispositivo no tiene bluetooth mostramos un mensaje
-        if (bluetoothDispostivo == null) {
+        if (globales.getbluetoothDispositivoAdapter() == null) {
             mostrar_cartel(getActivity().getString(R.string.bluetooth), getActivity().getString(R.string.alerta_no_bluetooth), R.mipmap.ic_alert_grey600_48dp, false);
         }
 
@@ -83,7 +81,8 @@ public class Arduino extends Fragment {
         // Initialize array adapters. One for already paired devices and
         // one for newly discovered devices
         ArrayAdapter<String> pairedDevicesArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.device_name);
-        mNewDevicesArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.device_name);
+        //mNewDevicesArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.device_name);
+        globales.setmNewDevicesArrayAdapter(new ArrayAdapter<String>(getContext(), R.layout.device_name));
 
         // Find and set up the ListView for paired devices
         final ListView pairedListView = (ListView) view.findViewById(R.id.paired_devices);
@@ -92,7 +91,7 @@ public class Arduino extends Fragment {
 
         // Find and set up the ListView for newly discovered devices
         final ListView newDevicesListView = (ListView) view.findViewById(R.id.new_devices);
-        newDevicesListView.setAdapter(mNewDevicesArrayAdapter);
+        newDevicesListView.setAdapter(globales.getmNewDevicesArrayAdapter());
         newDevicesListView.setOnItemClickListener(mDeviceClickListener);
 
         // Register for broadcasts when a device is discovered
@@ -104,10 +103,10 @@ public class Arduino extends Fragment {
         getActivity().registerReceiver(mReceiver, filter);
 
         // Get the local Bluetooth adapter
-        mBtAdapter = BluetoothAdapter.getDefaultAdapter();
+        globales.setbluetoothDispositivoAdapter(BluetoothAdapter.getDefaultAdapter());
 
         // Get a set of currently paired devices
-        Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
+        Set<BluetoothDevice> pairedDevices = globales.getbluetoothDispositivoAdapter().getBondedDevices();
 
         // If there are paired devices, add each one to the ArrayAdapter
         if (pairedDevices.size() > 0) {
@@ -159,7 +158,7 @@ public class Arduino extends Fragment {
     public void comprobar_bluetooth() {
 
         // Phone does not support Bluetooth so let the user know and exit.
-        if (bluetoothDispostivo == null) {
+        if (globales.getbluetoothDispositivoAdapter() == null) {
             mostrar_cartel(getActivity().getString(R.string.bluetooth), getActivity().getString(R.string.dispositivo_no_bluetooth), R.mipmap.ic_alert_grey600_48dp, false);
 
         } else {
@@ -169,15 +168,15 @@ public class Arduino extends Fragment {
     }
 
     public void solicitar_permisos(){
-        if (!bluetoothDispostivo.isEnabled()) {
+        if (!globales.getbluetoothDispositivoAdapter().isEnabled()) {
             //Mandamos la orden para activar el bluetooth, esto ya muestra el cartel de permisos para activar
             Intent enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBT, REQUEST_BLUETOOTH);
+            startActivityForResult(enableBT, globales.getRequestBluetooth());
         }
     }
 
     public void habilitar_bluetooth() {
-        if (!bluetoothDispostivo.isEnabled()) {
+        if (!globales.getbluetoothDispositivoAdapter().isEnabled()) {
             //Mostramos informacion sobre lo que vamos a pedir ahora
             mostrar_cartel_activar_bluetooth(getActivity().getString(R.string.permisos_bluetooth), getActivity().getString(R.string.info_activar_bluetooth), R.mipmap.ic_bluetooth_grey600_48dp, false);
 
@@ -290,12 +289,12 @@ public class Arduino extends Fragment {
         view.findViewById(R.id.txt_nuevos).setVisibility(View.VISIBLE);
 
         // If we're already discovering, stop it
-        if (mBtAdapter.isDiscovering()) {
-            mBtAdapter.cancelDiscovery();
+        if (globales.getbluetoothDispositivoAdapter().isDiscovering()) {
+            globales.getbluetoothDispositivoAdapter().cancelDiscovery();
         }
 
         // Request discover from BluetoothAdapter
-        mBtAdapter.startDiscovery();
+        globales.getbluetoothDispositivoAdapter().startDiscovery();
     }
 
     /**
@@ -306,7 +305,7 @@ public class Arduino extends Fragment {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
 
             // Cancel discovery because it's costly and we're about to connect
-            mBtAdapter.cancelDiscovery();
+            globales.getbluetoothDispositivoAdapter().cancelDiscovery();
 
             // Get the device MAC address, which is the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
@@ -351,15 +350,16 @@ public class Arduino extends Fragment {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // If it's already paired, skip it, because it's been listed already
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+                    //mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+                    globales.getmNewDevicesArrayAdapter().add(device.getName() + "\n" + device.getAddress());
                 }
                 // When discovery is finished, change the Activity title
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 //setProgressBarIndeterminateVisibility(false);
                 //setTitle(R.string.select_device);
-                if (mNewDevicesArrayAdapter.getCount() == 0) {
+                if (globales.getmNewDevicesArrayAdapter().getCount() == 0) {
                     String noDevices = "No se han encontrado más dispositivos";
-                    mNewDevicesArrayAdapter.add(noDevices);
+                    globales.getmNewDevicesArrayAdapter().add(noDevices);
                 }
             }
         }

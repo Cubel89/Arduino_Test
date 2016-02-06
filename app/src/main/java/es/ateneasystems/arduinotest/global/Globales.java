@@ -22,23 +22,21 @@ public class Globales extends Application {
 
 
     //################ Bluetooth ################//
-    private BluetoothAdapter mBtAdapter;
+    private BluetoothAdapter bluetoothDispositivoAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
-    BluetoothAdapter bluetoothDispostivo; //TODO: Creo que esto sobra
     //Variables estaticas
     public static int REQUEST_BLUETOOTH = 1;
 
 
+    public void setbluetoothDispositivoAdapter(BluetoothAdapter bluetoothDispositivoAdapter) {
 
-    public void setmBtAdapter(BluetoothAdapter mBtAdapter){
-
-        this.mBtAdapter = mBtAdapter;
+        this.bluetoothDispositivoAdapter = bluetoothDispositivoAdapter;
 
     }
 
-    public BluetoothAdapter getmBtAdapter (){
+    public BluetoothAdapter getbluetoothDispositivoAdapter() {
 
-        return this.mBtAdapter;
+        return this.bluetoothDispositivoAdapter;
     }
 
     public void setmNewDevicesArrayAdapter (ArrayAdapter mNewDevicesArrayAdapter){
@@ -62,15 +60,36 @@ public class Globales extends Application {
     //################ Bluetooth ################//
     //################ Bluetooth 2 ################//
     private static final SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm:ss.SSS");
-    final int RECIEVE_MESSAGE = 1;        // Status  for Handler
-    private BluetoothAdapter btAdapter = null;
+    final static int RECIEVE_MESSAGE = 1;        // Status  for Handler
     private BluetoothSocket btSocket = null;
-    private StringBuilder sb = new StringBuilder();
+    //private StringBuilder sb = new StringBuilder();
 
     //private ConnectedThread mConnectedThread;
 
     // SPP UUID service
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
+    public SimpleDateFormat getTimeformat() {
+        return this.timeformat;
+    }
+
+    public int getRECIEVE_MESSAGE() {
+        return this.RECIEVE_MESSAGE;
+    }
+
+    public void setBtSocket(BluetoothSocket btSocket) {
+        this.btSocket = btSocket;
+    }
+
+    public BluetoothSocket getBtSocket() {
+        return this.btSocket;
+    }
+
+    public UUID getMyUuid() {
+        return this.MY_UUID;
+    }
+
+
     //################ Bluetooth 2 ################//
 
     //Preferencias
