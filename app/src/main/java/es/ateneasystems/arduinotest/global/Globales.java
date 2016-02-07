@@ -20,6 +20,8 @@ public class Globales extends Application {
     private String arduino_conectado;
     private String arduino_conectado_mac;
 
+    private Boolean publicidad;
+
 
     //################ Bluetooth ################//
     private BluetoothAdapter bluetoothDispositivoAdapter;
@@ -106,11 +108,17 @@ public class Globales extends Application {
 
         //Cargamos el contenido de las preferencias
         this.aviso_cookies = prefs.getBoolean("aviso_cookies", false);
+
+        //Iniciamos la publicidad a no
+        this.publicidad = false;
     }
 
 
 
     //Getters
+    public boolean getPublicidad() {
+        return this.publicidad;
+    }
     public boolean getAviso_cookies() {
         return this.aviso_cookies;
     }
@@ -127,6 +135,9 @@ public class Globales extends Application {
 
 
     //Setters
+    public void setPublicidad(boolean publicidad) {
+        this.publicidad = publicidad;
+    }
     public void setAviso_cookies(boolean aviso_cookies) {
         //Editamos las preferencias
         editor.putBoolean("aviso_cookies", aviso_cookies);

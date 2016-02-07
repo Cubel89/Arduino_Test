@@ -26,6 +26,8 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
+import java.io.IOException;
+
 import es.ateneasystems.arduinotest.fragments.Arduino;
 import es.ateneasystems.arduinotest.fragments.Home;
 import es.ateneasystems.arduinotest.fragments.Terminal;
@@ -154,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         showInterstitial();
+
+        Log.d(logname, "RESUME");
     }
 
     private void selectItem(String title) {
@@ -210,13 +214,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showInterstitial() {
-        //Cargamos la publicidad
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mInterstitialAd.loadAd(adRequest);
-        // Show the ad if it's ready. Otherwise toast and restart the game.
-        if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
+        Log.d(logname, "DEBERIA SALIR PUBLICIDAD");
+        if (globales.getPublicidad()) {
+            Log.d(logname, "PUBLICIDAD");
+            //Cargamos la publicidad
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mInterstitialAd.loadAd(adRequest);
+            // Show the ad if it's ready. Otherwise toast and restart the game.
+            if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            }
+
+
+
         }
+
+
     }
 
     private void aviso_cookies() {
@@ -260,4 +273,14 @@ public class MainActivity extends AppCompatActivity {
         //Mostramos el cartel
         cartel_mostrar.show();
     }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        Log.d(logname, "PAUSE");
+    }
+
+
 }
