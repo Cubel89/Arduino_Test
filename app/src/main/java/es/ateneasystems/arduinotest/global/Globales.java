@@ -79,6 +79,7 @@ public class Globales extends Application {
         return this.RECIEVE_MESSAGE;
     }
 
+
     public void setBtSocket(BluetoothSocket btSocket) {
         this.btSocket = btSocket;
     }
