@@ -28,7 +28,9 @@ import com.google.android.gms.ads.InterstitialAd;
 
 import java.io.IOException;
 
+import es.ateneasystems.arduinotest.fragments.Analogico;
 import es.ateneasystems.arduinotest.fragments.Arduino;
+import es.ateneasystems.arduinotest.fragments.Digital;
 import es.ateneasystems.arduinotest.fragments.Home;
 import es.ateneasystems.arduinotest.fragments.Terminal;
 import es.ateneasystems.arduinotest.global.Globales;
@@ -201,6 +203,10 @@ public class MainActivity extends AppCompatActivity {
             fragment = new Terminal();
         else if (title == getApplication().getString(R.string.log_out_item))
             System.exit(0);
+        else if (title == getApplication().getString(R.string.digital_item))
+            fragment = new Digital();
+        else if (title == getApplication().getString(R.string.analogico_item))
+            fragment = new Analogico();
         else {
             fragment = new Home();
             Snackbar.make(findViewById(android.R.id.content), "Activity no existente", Snackbar.LENGTH_LONG)
