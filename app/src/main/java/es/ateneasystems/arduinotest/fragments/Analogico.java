@@ -13,6 +13,10 @@ import es.ateneasystems.arduinotest.global.Globales;
 
 
 public class Analogico extends Fragment {
+    /**
+     * Log
+     */
+    private String logname = "Analogico (Fragment)";
     //Variables
     private View view;
     Globales globales;
