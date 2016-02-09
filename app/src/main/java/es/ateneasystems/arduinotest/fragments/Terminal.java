@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class Terminal extends Fragment {
     private View view;
     TextView tv_terminal;
     EditText txt_terminal;
+    ScrollView scroll_terminal;
     Handler h;
 
     final int RECIEVE_MESSAGE = 1;        // Status  for Handler
@@ -75,6 +77,7 @@ public class Terminal extends Fragment {
         final FloatingActionButton fab_escribir = (FloatingActionButton) view.findViewById(R.id.fab_escribir);
         txt_terminal = (EditText) view.findViewById(R.id.txt_terminal);
         tv_terminal = (TextView) view.findViewById(R.id.tv_terminal);
+        scroll_terminal = (ScrollView) view.findViewById(R.id.scroll_terminal);
 
 
         //Inicio
@@ -107,9 +110,10 @@ public class Terminal extends Fragment {
                             String message = sb.substring(0, endOfLineIndex);                // extract string
                             sb.delete(0, sb.length());                                        // and clear
                             //tv_terminal.setText("Data from Arduino: " + sbprint);            // update TextView
-                            automaticos("Recibido desde Arduino: " + message);
+                            automaticos("[ARDUINO] " + message);
                         }
                         Log.d(logname, "...String:" + sb.toString() + "Byte:" + msg.arg1 + "...");
+                        rellenar_terminal();
                         break;
                 }
             }
@@ -298,6 +302,8 @@ public class Terminal extends Fragment {
 
         mConnectedThread = new ConnectedThread(globales.getBtSocket());
         mConnectedThread.start();
+
+        rellenar_terminal();
     }
 
     @Override
@@ -351,7 +357,7 @@ public class Terminal extends Fragment {
 
     void automaticos(String message) {
 
-
+        /*
         StringBuilder automaticos = new StringBuilder();
         automaticos.append("[").append(globales.getTimeformat().format(new Date())).append("]");
         SpannableString blackSpannable = new SpannableString(automaticos);
@@ -368,8 +374,13 @@ public class Terminal extends Fragment {
         blueSpannable.setSpan(new ForegroundColorSpan(Color.RED), 0, mensaje.length(), 0);
         tv_terminal.append(blueSpannable);
 
-        tv_terminal.append("\n");
+        */
 
+
+        //Test
+        String mensaje_guardar = new String();
+        mensaje_guardar = "[" + globales.getTimeformat().format(new Date()) + "]" + " " + message;
+        globales.setLog_terminal_bluetooth(mensaje_guardar);
     }
 
     private void dispostivo_no_conectado() {
@@ -383,6 +394,25 @@ public class Terminal extends Fragment {
                 .commit();
 
         //TODO: falta cambiar el titulo i el boton del menu seleccionado
+    }
+
+    private void rellenar_terminal() {
+
+        //Borramos text_view
+        tv_terminal.setText("");
+
+        //Traemos la cantidad de items
+        int cantidad_mensajes = globales.getLog_terminal_bluetooth().size();
+        for (int i = 0; i < cantidad_mensajes; i++) {
+
+            //Metemos cada item en una linea del text view
+            tv_terminal.append(globales.getLog_terminal_bluetooth().get(i) + "\n");
+
+        }
+
+        //Forzamos el scroll al fondo para ver lo ultimo que ha sucedido
+        scroll_terminal.fullScroll(View.FOCUS_DOWN);
+
     }
 
 

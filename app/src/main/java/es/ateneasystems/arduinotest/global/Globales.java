@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.widget.ArrayAdapter;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -21,6 +22,8 @@ public class Globales extends Application {
     private String arduino_conectado_mac;
 
     private Boolean publicidad;
+
+    private ArrayList<String> log_terminal_bluetooth = new ArrayList<String>();
 
 
     //################ Bluetooth ################//
@@ -133,6 +136,10 @@ public class Globales extends Application {
         return this.arduino_conectado_mac;
     }
 
+    public ArrayList<String> getLog_terminal_bluetooth() {
+        return this.log_terminal_bluetooth;
+    }
+
 
 
     //Setters
@@ -153,6 +160,12 @@ public class Globales extends Application {
 
     public void setArduino_conectado_mac(String arduino_conectado_mac) {
         this.arduino_conectado_mac = arduino_conectado_mac;
+    }
+
+    public void setLog_terminal_bluetooth(String mensaje_guardar) {
+
+        this.log_terminal_bluetooth.add(mensaje_guardar);
+
     }
 
 
