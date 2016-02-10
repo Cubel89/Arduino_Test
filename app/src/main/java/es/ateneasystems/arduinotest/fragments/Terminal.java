@@ -327,7 +327,7 @@ public class Terminal extends Fragment {
      */
     void appendLog(String message) {
 
-        StringBuilder encabezado = new StringBuilder();
+        /*StringBuilder encabezado = new StringBuilder();
         encabezado.append("[").append(globales.getTimeformat().format(new Date())).append("]");
         SpannableString blackSpannable = new SpannableString(encabezado);
         blackSpannable.setSpan(new ForegroundColorSpan(Color.BLACK), 0, encabezado.length(), 0);
@@ -351,8 +351,12 @@ public class Terminal extends Fragment {
             tv_terminal.scrollTo(0, scrollAmount);
         else tv_terminal.scrollTo(0, 0);
 
+        txt_terminal.setText("");*/
+        //Test
+        String mensaje_guardar = new String();
+        mensaje_guardar = "[" + globales.getTimeformat().format(new Date()) + "]" + " " + message;
+        globales.setLog_terminal_bluetooth(mensaje_guardar);
         txt_terminal.setText("");
-
     }
 
     void automaticos(String message) {
@@ -403,6 +407,9 @@ public class Terminal extends Fragment {
 
         //Traemos la cantidad de items
         int cantidad_mensajes = globales.getLog_terminal_bluetooth().size();
+        if (cantidad_mensajes == 0) {
+            tv_terminal.append("Terminal" + "\n");
+        }
         for (int i = 0; i < cantidad_mensajes; i++) {
 
             //Metemos cada item en una linea del text view

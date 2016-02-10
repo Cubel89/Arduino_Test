@@ -156,8 +156,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        showInterstitial();
+        if (globales.getPublicidad()) {
+            showInterstitial();
+        }
 
         Log.d(logname, "RESUME");
     }
@@ -221,8 +222,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void showInterstitial() {
         Log.d(logname, "DEBERIA SALIR PUBLICIDAD");
-        if (globales.getPublicidad()) {
-            Log.d(logname, "PUBLICIDAD");
+
+        Log.d(logname, "PUBLICIDAD");
             //Cargamos la publicidad
             AdRequest adRequest = new AdRequest.Builder().build();
             mInterstitialAd.loadAd(adRequest);
@@ -230,10 +231,6 @@ public class MainActivity extends AppCompatActivity {
             if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
                 mInterstitialAd.show();
             }
-
-
-
-        }
 
 
     }
