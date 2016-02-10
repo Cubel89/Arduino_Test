@@ -4,6 +4,7 @@ package es.ateneasystems.arduinotest.fragments;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import es.ateneasystems.arduinotest.MainActivity;
 import es.ateneasystems.arduinotest.R;
@@ -49,8 +51,8 @@ public class Home extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         //Declaracion de componentes
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab2);
-        bluetoothDispostivo = BluetoothAdapter.getDefaultAdapter();
+        ImageButton btn_descargar = (ImageButton) view.findViewById(R.id.btn_descargar);
+        ImageButton btn_compartir = (ImageButton) view.findViewById(R.id.btn_compartir);
 
 
         //Si el dispositivo no tiene bluetooth mostramos un mensaje
@@ -61,12 +63,19 @@ public class Home extends Fragment {
 
 
         //Pulsaciones de botones
-        fab.setOnClickListener(new View.OnClickListener() {
+        btn_descargar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mostrar_cartel("Botón no funcional");
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://apis.ateneasystems.es/arduino_test/arduino_test.zip"));
+                startActivity(browserIntent);
 
 
+            }
+        });
+        btn_compartir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mostrar_cartel("Boton no funcional");
             }
         });
 
