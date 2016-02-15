@@ -1,5 +1,6 @@
 package es.ateneasystems.arduinotest;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     //Variables
     private Globales globales;
     private InterstitialAd mInterstitialAd;
+    private View view;
 
 
     /**
@@ -62,8 +64,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Variables globales
         globales = (Globales) getApplication();
+        view = findViewById(android.R.id.content);
+        ;
 
         setToolbar(); // Setear Toolbar como action bar
+
+
+        //Si el dispositivo no tiene bluetooth mostramos un mensaje
+        globales.setbluetoothDispositivoAdapter(globales.getbluetoothDispositivoAdapter().getDefaultAdapter());
+        if (globales.getbluetoothDispositivoAdapter() == null) {
+            mostrar_cartel(getString(R.string.bluetooth), getString(R.string.alerta_no_bluetooth), R.mipmap.ic_alert_grey600_48dp, false);
+        }
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -82,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         if (!globales.getAviso_cookies()) {
             aviso_cookies();
         }
-        ;
+
 
         //Publicidad
         // Create the InterstitialAd and set the adUnitId.
@@ -201,13 +212,14 @@ public class MainActivity extends AppCompatActivity {
         else if (title == getApplication().getString(R.string.arduino_item))
             fragment = new Arduino();
         else if (title == getApplication().getString(R.string.terminal_item))
-            fragment = new Terminal();
+            if (globales.getBtSocket() != null) fragment = new Terminal();
+
         else if (title == getApplication().getString(R.string.log_out_item))
             System.exit(0);
         else if (title == getApplication().getString(R.string.digital_item))
-            fragment = new Digital();
+                if (globales.getBtSocket() != null) fragment = new Digital();
         else if (title == getApplication().getString(R.string.analogico_item))
-            fragment = new Analogico();
+                    if (globales.getBtSocket() != null) fragment = new Analogico();
         else {
             fragment = new Home();
             Snackbar.make(findViewById(android.R.id.content), "Activity no existente", Snackbar.LENGTH_LONG)
@@ -285,5 +297,50 @@ public class MainActivity extends AppCompatActivity {
         Log.d(logname, "PAUSE");
     }
 
+    //Dialogos
+    public void mostrar_cartel(String titulo, String mensaje, int identificador_imagen, boolean pregunta) {
+        //boolean respuesta = false;
+
+        //Creamos el cartel
+        AlertDialog.Builder cartel_mostrar = new AlertDialog.Builder(this);
+
+        //Añadimos su icono
+        cartel_mostrar.setIcon(identificador_imagen);
+
+        //Añadimos titulo
+        cartel_mostrar.setTitle(titulo);
+
+        //Añadimos mensaje
+        cartel_mostrar.setMessage(mensaje);
+
+        //Comprobamos si es informacion o pregunta
+        if (pregunta) { //Si es verdadero añadiremos los dos botones
+            cartel_mostrar.setPositiveButton(getString(R.string.boton_aceptar), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do something else
+                    Log.d("Dialogo", getString(R.string.boton_aceptar));
+                    //return true;
+                }
+            });
+            cartel_mostrar.setNegativeButton(getString(R.string.boton_cancelar), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do something else
+                    Log.d("Dialogo", getString(R.string.boton_cancelar));
+                    //return false;
+                }
+            });
+        } else { //Si es falso, solo uno
+            cartel_mostrar.setPositiveButton(getString(R.string.boton_leido), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do something else
+                    Log.d("Dialogo", getString(R.string.boton_leido));
+                    //return true;
+                }
+            });
+        }
+
+        //Mostramos el cartel
+        cartel_mostrar.show();
+    }
 
 }

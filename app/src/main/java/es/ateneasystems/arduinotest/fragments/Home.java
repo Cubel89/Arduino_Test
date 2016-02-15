@@ -56,9 +56,9 @@ public class Home extends Fragment {
 
 
         //Si el dispositivo no tiene bluetooth mostramos un mensaje
-        if (bluetoothDispostivo == null) {
+        /*if (bluetoothDispostivo == null) {
             mostrar_cartel(getActivity().getString(R.string.bluetooth), getActivity().getString(R.string.alerta_no_bluetooth), R.mipmap.ic_alert_grey600_48dp, false);
-        }
+        }*/
 
 
 

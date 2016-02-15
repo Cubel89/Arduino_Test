@@ -35,16 +35,7 @@ public class Arduino extends Fragment {
      * Log
      */
     private String logname = "Arduino (Fragment)";
-    //Bluetooth
-    /**
-     * Member fields
-     */
-    private BluetoothAdapter mBtAdsapter;
 
-    /**
-     * Newly discovered devices
-     */
-    private ArrayAdapter<String> mNewDevicesArrayAdaptser;
 
 
     //Variables
