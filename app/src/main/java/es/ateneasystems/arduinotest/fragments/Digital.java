@@ -34,10 +34,6 @@ public class Digital extends Fragment {
         view = inflater.inflate(R.layout.fragment_digital, container, false);
 
         //Declaracion de componentes
-        Button btn_low_p00 = (Button) view.findViewById(R.id.btn_low_p00);
-        Button btn_high_p00 = (Button) view.findViewById(R.id.btn_high_p00);
-        Button btn_low_p01 = (Button) view.findViewById(R.id.btn_low_p01);
-        Button btn_high_p01 = (Button) view.findViewById(R.id.btn_high_p01);
         Button btn_low_p02 = (Button) view.findViewById(R.id.btn_low_p02);
         Button btn_high_p02 = (Button) view.findViewById(R.id.btn_high_p02);
         Button btn_low_p03 = (Button) view.findViewById(R.id.btn_low_p03);
@@ -63,15 +59,254 @@ public class Digital extends Fragment {
         Button btn_low_p13 = (Button) view.findViewById(R.id.btn_low_p13);
         Button btn_high_p13 = (Button) view.findViewById(R.id.btn_high_p13);
 
+        Button btn_low_pa0 = (Button) view.findViewById(R.id.btn_low_pa0);
+        Button btn_high_pa0 = (Button) view.findViewById(R.id.btn_high_pa0);
+        Button btn_low_pa1 = (Button) view.findViewById(R.id.btn_low_pa1);
+        Button btn_high_pa1 = (Button) view.findViewById(R.id.btn_high_pa1);
+        Button btn_low_pa2 = (Button) view.findViewById(R.id.btn_low_pa2);
+        Button btn_high_pa2 = (Button) view.findViewById(R.id.btn_high_pa2);
+        Button btn_low_pa3 = (Button) view.findViewById(R.id.btn_low_pa3);
+        Button btn_high_pa3 = (Button) view.findViewById(R.id.btn_high_pa3);
+        Button btn_low_pa4 = (Button) view.findViewById(R.id.btn_low_pa4);
+        Button btn_high_pa4 = (Button) view.findViewById(R.id.btn_high_pa4);
+        Button btn_low_pa5 = (Button) view.findViewById(R.id.btn_low_pa5);
+        Button btn_high_pa5 = (Button) view.findViewById(R.id.btn_high_pa5);
+
 
         //Pulsaciones de boton
-        btn_high_p00.setOnClickListener(new View.OnClickListener() {
+        btn_high_p02.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                high("btn_high_p00");
+                high("btn_high_p02");
+            }
+        });
+        btn_low_p02.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_p02");
             }
         });
 
+        btn_high_p03.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_p03");
+            }
+        });
+        btn_low_p03.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_p03");
+            }
+        });
+
+        btn_high_p04.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_p04");
+            }
+        });
+        btn_low_p04.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_p04");
+            }
+        });
+
+        btn_high_p05.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_p05");
+            }
+        });
+        btn_low_p05.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_p05");
+            }
+        });
+
+        btn_high_p06.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_p06");
+            }
+        });
+        btn_low_p06.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_p06");
+            }
+        });
+
+        btn_high_p07.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_p07");
+            }
+        });
+        btn_low_p07.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_p07");
+            }
+        });
+
+        btn_high_p08.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_p08");
+            }
+        });
+        btn_low_p08.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_p08");
+            }
+        });
+
+        btn_high_p09.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_p09");
+            }
+        });
+        btn_low_p09.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_p09");
+            }
+        });
+
+        btn_high_p10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_p10");
+            }
+        });
+        btn_low_p10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_p10");
+            }
+        });
+
+        btn_high_p11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_p11");
+            }
+        });
+        btn_low_p11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_p11");
+            }
+        });
+
+        btn_high_p12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_p12");
+            }
+        });
+        btn_low_p12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_p12");
+            }
+        });
+
+        btn_high_p13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_p13");
+            }
+        });
+        btn_low_p13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_p13");
+            }
+        });
+
+        btn_high_pa0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_pa0");
+            }
+        });
+        btn_low_pa0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_pa0");
+            }
+        });
+
+        btn_high_pa1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_pa1");
+            }
+        });
+        btn_low_pa1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_pa1");
+            }
+        });
+
+        btn_high_pa2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_pa2");
+            }
+        });
+        btn_low_pa2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_pa2");
+            }
+        });
+
+        btn_high_pa3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_pa3");
+            }
+        });
+        btn_low_pa3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_pa3");
+            }
+        });
+
+        btn_high_pa4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_pa4");
+            }
+        });
+        btn_low_pa4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_pa4");
+            }
+        });
+
+        btn_high_pa5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                high("btn_high_pa5");
+            }
+        });
+        btn_low_pa5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                low("btn_low_pa5");
+            }
+        });
 
         //Devolvemos la vista
         return view;
@@ -83,6 +318,18 @@ public class Digital extends Fragment {
 
         Log.d(logname, boton);
         Log.d(logname, pin);
+        Log.d(logname, pin + "|1");
 
     }
+
+    private void low(String boton) {
+        String pin;
+        pin = boton.substring(9);
+
+        Log.d(logname, boton);
+        Log.d(logname, pin);
+        Log.d(logname, pin + "|0");
+
+    }
+
 }

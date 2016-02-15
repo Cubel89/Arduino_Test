@@ -61,7 +61,6 @@ public class Arduino extends Fragment {
         final TextView txt_nuevos = (TextView) view.findViewById(R.id.txt_nuevos);
 
 
-
         //Si el dispositivo no tiene bluetooth mostramos un mensaje
         if (globales.getbluetoothDispositivoAdapter() == null) {
             mostrar_cartel(getActivity().getString(R.string.bluetooth), getActivity().getString(R.string.alerta_no_bluetooth), R.mipmap.ic_alert_grey600_48dp, false);
@@ -137,8 +136,6 @@ public class Arduino extends Fragment {
         //Devolvemos la vista
         return view;
     }
-
-    ;
 
     public void mostrar_cartel(String texto) {
         Snackbar.make(view, texto, Snackbar.LENGTH_LONG)

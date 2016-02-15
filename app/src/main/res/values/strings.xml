@@ -34,6 +34,7 @@
 
     <!-- Home -->
     <string name="alerta_no_bluetooth">Este dispositivo no dispone de bluetooth\nSe recomienda tener bluetooth para poder sacar el máximo provecho a esta app</string>
+    <string name="tv_info_home">Descarga o comparte el link de un archivo zip con el ejemplo para conectar Arduino con esta app a traves de los modulos Bluetooth HC-06 y HC-05.</string>
     <!-- FIN Home -->
 
 
