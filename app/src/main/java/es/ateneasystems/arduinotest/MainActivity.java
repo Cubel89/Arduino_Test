@@ -65,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
         //Variables globales
         globales = (Globales) getApplication();
         view = findViewById(android.R.id.content);
-        ;
-
         setToolbar(); // Setear Toolbar como action bar
 
 
@@ -212,14 +210,16 @@ public class MainActivity extends AppCompatActivity {
         else if (title == getApplication().getString(R.string.arduino_item))
             fragment = new Arduino();
         else if (title == getApplication().getString(R.string.terminal_item))
-            if (globales.getBtSocket() != null) fragment = new Terminal();
-
+            //if (globales.getBtSocket() != null) fragment = new Terminal();
+            fragment = new Terminal();
         else if (title == getApplication().getString(R.string.log_out_item))
             System.exit(0);
         else if (title == getApplication().getString(R.string.digital_item))
-                if (globales.getBtSocket() != null) fragment = new Digital();
+            //if (globales.getBtSocket() != null) fragment = new Digital();
+            fragment = new Digital();
         else if (title == getApplication().getString(R.string.analogico_item))
-                    if (globales.getBtSocket() != null) fragment = new Analogico();
+            //if (globales.getBtSocket() != null) fragment = new Analogico();
+            fragment = new Analogico();
         else {
             fragment = new Home();
             Snackbar.make(findViewById(android.R.id.content), "Activity no existente", Snackbar.LENGTH_LONG)
