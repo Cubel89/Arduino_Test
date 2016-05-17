@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
     defaultConfig {
         applicationId "es.ateneasystems.arduinotest"
-        minSdkVersion 16
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 17
         versionName '0.0.17'
